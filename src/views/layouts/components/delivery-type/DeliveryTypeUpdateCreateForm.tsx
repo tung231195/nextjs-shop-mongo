@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "@mui/material";
-import { Box, createTheme, CssBaseline, Grid, Paper, Typography } from "@mui/material";
+import { Box, CssBaseline, Grid, Paper, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -8,13 +8,13 @@ import { useDispatch } from "react-redux";
 import CustomTextField from "src/components/text-field";
 import { TPramsCreateDeliveryType } from "src/configs/@type/delivery-type";
 import { AppDispatch } from "src/stores";
-import { createCityAction, updateCityAction } from "src/stores/city/cityAction";
 import { createDeliveryTypeAction, updateDeliveryTypeAction } from "src/stores/delivery-type/deliveryTypeAction";
 import * as yup from "yup"
 
 const DeliveryTypeUpdateCreateForm = (props:any) => {
   const {updateData,handleClose} = props
-    const defaultTheme = createTheme();
+
+    //const defaultTheme = createTheme();
     const {t} = useTranslation();
     const schema = yup
     .object({
@@ -29,10 +29,10 @@ const DeliveryTypeUpdateCreateForm = (props:any) => {
       control,
       reset,
       handleSubmit,
-      formState: { errors },
     } = useForm({
       resolver: yupResolver(schema),
     })
+
     // const onSubmit = (data) => console.log(data)    
     const onSubmit = (params:TPramsCreateDeliveryType):void => {
       if (!updateData) {
@@ -54,8 +54,8 @@ const DeliveryTypeUpdateCreateForm = (props:any) => {
           reset({})          
         }
     },[updateData])
+
     return (
-  
         <Grid container component="main" sx={{ height: 'auto' }}>
           <CssBaseline />
           <Grid

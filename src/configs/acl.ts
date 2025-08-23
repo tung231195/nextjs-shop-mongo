@@ -2,9 +2,7 @@ import { AbilityBuilder, Ability } from '@casl/ability'
 
 export type Subjects = string
 export type Actions = 'manage' | 'create' | 'read' | 'update' | 'delete'
-
 export type AppAbility = Ability<[Actions, Subjects]> | undefined
-
 export const AppAbility = Ability as any
 export type ACLObj = {
   action: Actions
@@ -17,8 +15,8 @@ export type ACLObj = {
  * admin can manage everything and client can just visit ACL page
  */
 const defineRulesFor = (permissions: string[], subject: string) => {
+  console.log('subject',subject)
   const { can, rules } = new AbilityBuilder(AppAbility)
-
   if (permissions.includes('ADMIN.GRANTED')) {
      can('manage', 'all')
   } 
@@ -27,6 +25,7 @@ const defineRulesFor = (permissions: string[], subject: string) => {
 }
 
 export const buildAbilityFor = (permissions: string[], subject: string): AppAbility => {
+
   return new AppAbility(defineRulesFor(permissions, subject), {
     // https://casl.js.org/v5/en/guide/subject-type-detection
     // @ts-ignore

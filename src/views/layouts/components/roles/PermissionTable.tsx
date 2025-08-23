@@ -1,18 +1,22 @@
-import { Button, Checkbox } from "@mui/material";
-import { GridCellParams, GridColDef, GridRenderCellParams, GridTreeNodeWithRender } from "@mui/x-data-grid";
+import { Checkbox } from "@mui/material";
+import { GridColDef } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { LIST_DATA_PERMISION, PERMISSIONS } from "src/configs/permission";
 import CustomDataTable from "src/components/data-grid"
+
 const PermissionTable = (props:any) => {
   const {checkedPermission,setCheckedPermisson} = props
-  const [isChecked, setIsChecked] = useState(false);
+
+  //const [isChecked, setIsChecked] = useState(false);
   /**state */
   const [allPermission, setAllPermission] = useState<any>([])
+
   // const [checkedPermission,setCheckedPermisson] = useState<string[]>([""])
-  const[open,setOpen] = useState<boolean>(false);
+  //const[open,setOpen] = useState<boolean>(false);
+
   /** transaltion */
-  const { i18n, t } = useTranslation();
+  //const { i18n, t } = useTranslation();
+
   /** handleCreateRole */
   
   const  getValuePermission = (parentValue:string,value:string,mode:string) => {
@@ -20,10 +24,10 @@ const PermissionTable = (props:any) => {
     return parentValue ? PERMISSIONS[parentValue][value][mode] : PERMISSIONS[value];
   }
   const getAllObjectValue = (obj:any) => {
-    let values:any[] = [];
+    const values:any[] = [];
     if(typeof(obj) === 'object') {
       console.log('is all obj',obj);
-        for(let key in obj) {
+        for(const key in obj) {
            if(typeof(obj[key]) === 'object') {
             values.push(...getAllObjectValue(obj[key]))
            }  else {
@@ -31,47 +35,40 @@ const PermissionTable = (props:any) => {
           }
         }
     }
+
     return values; 
   }
-  const getPermissions = (value:string,parentValue?:string) => {
-
-    console.log(value,parentValue)
+    const getPermissions = (value:string,parentValue?:string) => {
     
     if(parentValue) {
+
      return  getAllObjectValue(PERMISSIONS[parentValue][value]);
     } else {
+
      return getAllObjectValue(PERMISSIONS[value]);
     }
 
   }
 
-
   const  hanldeOnchangeAll = (params:any) => {
-      console.log(params);
       const {value,isParent,parentValue} = params
       if(isParent) {
-        let pSelected = getPermissions(value)
+
+        //const pSelected = getPermissions(value)
       } else {
-        let pSelected = getPermissions(value,parentValue)
+        const pSelected = getPermissions(value,parentValue)
         console.log('fileraaa',checkedPermission,pSelected)
-        let isSelectedAll = pSelected.every((item) => checkedPermission.includes(item))
+        const isSelectedAll = pSelected.every((item) => checkedPermission.includes(item))
         if(isSelectedAll) {
-          let filter = checkedPermission.filter((per:any) => per!== pSelected.includes(per))
-           console.log('fileraaa aaaa',filter)
+
+          //const filter = checkedPermission.filter((per:any) => per!== pSelected.includes(per))
+           
          // setAllPermission(filter)
         } else {
+
           //setAllPermission([...allPermission,...pSelected])
         }
-
-        console.log('isSelectedAll',isSelectedAll)
-
       }
-  }
-  const handleChecked = (value:string) => {
-      if(checkedPermission.includes(value)) {
-        return true;
-      }
-      return false
   }
 
   /** hook react */
@@ -80,6 +77,7 @@ const PermissionTable = (props:any) => {
   },[])
   const columns: GridColDef[] = [
   { field: 'checkall', headerName: 'Check all', width: 80, renderCell: (params) => {
+
     return (
       <Checkbox  value={params.row.value} onChange={()=>hanldeOnchangeAll(params.row)} />
     );
@@ -96,6 +94,7 @@ const PermissionTable = (props:any) => {
   },
   { field: 'create', headerName: 'Create', width: 80, renderCell: (params) => {
     const {row} = params.row;
+
    // const isChecked = handleChecked(row.value);
     return (
       <>
@@ -107,6 +106,7 @@ const PermissionTable = (props:any) => {
     }   
   },
     { field: 'update', headerName: 'Update', width: 80, renderCell: (params) => {
+
    return (
       <>
       {params.row && !params.row?.isParent && 
@@ -129,8 +129,6 @@ const PermissionTable = (props:any) => {
   }
 ];
 const  hanldeClickPermission = (e:any) => {
-  console.log('click',e.target)
-  console.log(e.target.value);
   if(checkedPermission.includes(e.target.value)) {
     const newItem = checkedPermission.filter((item:any) => item != e.target.value);
     setCheckedPermisson(newItem);
@@ -138,16 +136,11 @@ const  hanldeClickPermission = (e:any) => {
     setCheckedPermisson([...checkedPermission, e.target.value]);
   }
 }
+const  getRowId =(row:any)=> {
 
-
-
-console.log('check permiss', checkedPermission);
-  const  getRowId =(row:any)=> {
     return row.id;
   }
-  const onButtonClick = (e:any, row:any) => {
 
-  }
   return (
     <>
       {allPermission && 

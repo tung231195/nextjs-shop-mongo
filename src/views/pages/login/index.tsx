@@ -1,23 +1,20 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CustomTextField from 'src/components/text-field';
 import { useAuth } from 'src/hooks/useAuth';
-
 import { Controller, useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import { TPramsLogin } from 'src/views/type';
 
 function Copyright(props:any) {
+
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
@@ -31,41 +28,31 @@ function Copyright(props:any) {
 }
 
 // TODO remove, this demo shouldn't need to reset the theme.
-
-const defaultTheme = createTheme();
+//const defaultTheme = createTheme();
 const schema = yup
   .object({
     email: yup.string().required(),
     password: yup.number().positive().integer().required(),
   })
   .required()
-
-
 const  SignInSide =() => {
-
-   const {login,user} = useAuth();
-
+const {login} = useAuth();
   const {
     control,
-    setValue,
-    register,
     handleSubmit,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   })
-  // const onSubmit = (data) => console.log(data)
 
+  // const onSubmit = (data) => console.log(data)
   const onSubmit = (params:TPramsLogin) => {
-   // event.preventDefault();
-    // const data = new FormData(event.currentTarget);
-      console.log('login data', params);
-     // return false;
       const user1 =login({      
       "email": "admin@gmail.com",
       "password": "123456789Kha@",
         rememberMe:true,
       });
+      console.log('loginaction',params,user1)
 
   };
 

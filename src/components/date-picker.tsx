@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import DatePicker from "react-datepicker";
-
 import "react-datepicker/dist/react-datepicker.css";
 
 // CSS Modules, react-datepicker-cssmodules.css
@@ -10,6 +9,7 @@ interface TPropsCustomDatePicker extends DatePicker {
 }
 const CustomDatePicker = (props:TPropsCustomDatePicker) => {
   const {date,handleChangeDate} = props
+  
   return(
     <DatePicker 
       selected={date} 

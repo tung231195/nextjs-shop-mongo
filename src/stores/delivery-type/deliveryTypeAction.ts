@@ -2,13 +2,14 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { TPramsCreateDeliveryType, TPramsGetAllDeliveryType, TPramsUpdateDeliveryType } from "src/configs/@type/delivery-type";
 import { CreateDeliveryType, deleteDeliveryType, getAllDeliveryTypes, updateDeliveryType } from "src/service/delivery-type"
 
-
 // get All 
 export const getAllDeliveryTypeAction = createAsyncThunk("getAllDeliveryTypeAction", async (data:TPramsGetAllDeliveryType) => {
   try {
     const allDeliveryType = await getAllDeliveryTypes(data);
+
     return allDeliveryType
   } catch (error) {
+
      return null;
   }
 });
@@ -17,8 +18,10 @@ export const getAllDeliveryTypeAction = createAsyncThunk("getAllDeliveryTypeActi
 export const createDeliveryTypeAction = createAsyncThunk("createDeliveryTypeAction", async (data:TPramsCreateDeliveryType) => {
   try {
     const newData = await CreateDeliveryType(data);
+
     return newData
   } catch (error) {
+
     return null;
   }
 });
@@ -28,6 +31,7 @@ export const updateDeliveryTypeAction = createAsyncThunk("updateDeliveryTypeActi
   try {
     console.log('price data',data)
     const allUser = await updateDeliveryType(data);
+
     return allUser
   } catch (error) {
   }
@@ -37,6 +41,7 @@ export const updateDeliveryTypeAction = createAsyncThunk("updateDeliveryTypeActi
 export const deleteDeliveryTypeAction = createAsyncThunk("deleteDeliveryTypeAction", async (deliveryId:string) => {
   try {
     const deleteData = await deleteDeliveryType(deliveryId);
+    
     return deleteData    
   } catch (error) {
    

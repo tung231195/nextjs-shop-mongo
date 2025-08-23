@@ -1,9 +1,11 @@
 import { Button } from "@mui/material"
+
 interface TEditButton {
   handleEdit: () => void
 }
 const EditButton = (props:TEditButton) => {
-    const {handleEdit} = props
+  const {handleEdit} = props
+  
   return (
     <>
       <Button

@@ -7,10 +7,9 @@ import {
   Typography,
 } from "@mui/material";
 import AddressItem from "./AddressItem";
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "src/stores";
+import React from "react";
 import { AddressType, UserDataType } from "src/contexts/types";
+
 interface TPropsEditAddress {
   handlAddNewAddress: () => void,
   hanldeUpdateAdress:() => void,
@@ -20,7 +19,6 @@ interface TPropsEditAddress {
   const { handlAddNewAddress,hanldeUpdateAdress,user } = props;
   const listAddress =user?.addresses
 
-  console.log("listAddress", listAddress);
   return (
     <>
       <Typography>My Address</Typography>
@@ -34,6 +32,7 @@ interface TPropsEditAddress {
           >
             {listAddress &&
               listAddress.map((address: AddressType) => {
+
                 return (
                   <React.Fragment key={address._id}>
                     <AddressItem address={address} hanldeUpdateAdress={hanldeUpdateAdress} />

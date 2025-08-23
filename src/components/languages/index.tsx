@@ -3,15 +3,11 @@ import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
 import { useTranslation } from 'react-i18next';
-import { SelectChangeEvent, useTheme } from '@mui/material';
+import { SelectChangeEvent } from '@mui/material';
 
 const ToggleLanguages = ()=>{
-  const {t,i18n} = useTranslation();
-  
-
-  const theme = useTheme();
+  const {i18n} = useTranslation();
   const [language, setLanguage] = React.useState<string>('');
-
   const handleChange = (event: SelectChangeEvent<typeof language>) => {
     const {
       target: { value },
@@ -40,5 +36,4 @@ const ToggleLanguages = ()=>{
     </Box>
   );
 }
-
 export default ToggleLanguages

@@ -4,20 +4,17 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CustomTextField from 'src/components/text-field';
-import { useAuth } from 'src/hooks/useAuth';
-
 import { Controller, useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
-import { TPramsCreateRole, TPramsLogin } from 'src/views/type';
+import { TPramsCreateRole } from 'src/views/type';
 import { useDispatch } from 'react-redux';
-import { createRoleAction, updateRoleAction } from 'src/stores/apps/role/roleAction';
+import { createRoleAction } from 'src/stores/apps/role/roleAction';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
-const defaultTheme = createTheme();
+//const defaultTheme = createTheme();
 const schema = yup
   .object({
     name: yup.string().required()
@@ -26,24 +23,24 @@ const schema = yup
 
 
 const  RoleCreate =(props:any) => {
+
   /** auth context */
-  const {login,user} = useAuth();
+  ///const {login,user} = useAuth();
   /** dispath */
   const dispath =  useDispatch();
   const {isEdit} = props;
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: {  },
   } = useForm({
     resolver: yupResolver(schema),
   })
+
   // const onSubmit = (data) => console.log(data)
-
-
-
   const onSubmit = (params:TPramsCreateRole):void => {
     if(isEdit)  {
+
      // dispath(updateRoleAction(params))
     } else {
       dispath(createRoleAction(params))
@@ -52,7 +49,6 @@ const  RoleCreate =(props:any) => {
   };
 
   return (
-
       <Grid container component="main" sx={{ height: 'auto' }}>
         <CssBaseline />
         <Grid

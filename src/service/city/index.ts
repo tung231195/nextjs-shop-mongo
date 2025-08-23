@@ -1,4 +1,3 @@
-import { TPramsGetAllUser } from "src/configs/@type/users";
 import axiosInstance from "src/helpers/axious";
 import CONFIG_API from "src/configs/api"
 import { TPramsCreateCity, TPramsGetAllCity, TPramsUpdateCity } from "src/configs/@type/city";
@@ -17,12 +16,12 @@ export const updateCity = async(data:TPramsUpdateCity)=> {
 
 export const getAllCitys = async(params:TPramsGetAllCity) => {
    
-   const cities = await axiosInstance.get(`${CONFIG_API.CITY.INDEX}`)
-   console.log('get All Citys', cities)
-   console.log('kkkkkkkkkkkkkkkk')
+   const cities = await axiosInstance.get(`${CONFIG_API.CITY.INDEX}`,{params})
    if(cities) {
+
       return cities;
    }else {
+
     return null; 
    }
 }

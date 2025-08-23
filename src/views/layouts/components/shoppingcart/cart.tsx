@@ -1,16 +1,15 @@
-import { Button, Checkbox, Icon, Input, Tab, Tabs } from "@mui/material";
+import { Button, Checkbox} from "@mui/material";
 import { Avatar, Box, Typography } from "@mui/material";
 import { useRouter } from "next/router";
-import { parse } from "path";
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { CartItem } from "src/configs/@type/shopping-cart";
 import { getCartItemsStoreData } from "src/helpers/storage";
 import { useAuth } from "src/hooks/useAuth";
 import { AppDispatch, RootState } from "src/stores";
 import { updateToCartAction } from "src/stores/shoppingcart";
+
 const ListCart = () => {
-  //const {cartItems} = useSelector((state:RootState) => state.cartSlide)
+
   //**state */
   const [checkItems, setCheckItems] = useState<string[]>([]);
   const dispatch = useDispatch<AppDispatch>();
@@ -22,7 +21,7 @@ const ListCart = () => {
   useEffect(() => {
     const listCarts = getCartItemsStoreData();
     const parseCartData = JSON.parse(listCarts.cartItems as string);
-    if (user) {
+    if (userId) {
       dispatch(
         updateToCartAction({ carts: parseCartData[userId], userId: userId })
       );
@@ -30,7 +29,8 @@ const ListCart = () => {
   }, []);
   const totalPrices = useMemo(() => {
     const totalPrice = cartItems.reduce((total, cartItem) => {
-      let discount = (cartItem.discount / 100) * cartItem.price;
+      const discount = (cartItem.discount / 100) * cartItem.price;
+
       return total + cartItem.amount * (cartItem.price - discount);
     }, 0);
 
@@ -40,9 +40,11 @@ const ListCart = () => {
     const totalPricesOrder = useMemo(() => {
     const totalPrice = cartItems.reduce((total, item) => {
       if(checkItems.includes(item.product)) {
-        let discount = (item.discount / 100) * item.price;
+        const discount = (item.discount / 100) * item.price;
+
         return total + item.amount * (item.price - discount);
       }
+
       return total
 
     }, 0);
@@ -58,16 +60,20 @@ const ListCart = () => {
     if (action == "increase") {
       newItems = cloneCartITems.map((item) => {
         if (item.product == _id) {
+
           return { ...item, amount: item.amount + 1 };
         } else {
+
           return { ...item };
         }
       });
     } else {
       newItems = cloneCartITems.map((item) => {
         if (item.amount > 0 && item.product == _id) {
+
           return { ...item, amount: item.amount - 1 };
         } else {
+
           return { ...item };
         }
       });
@@ -83,11 +89,11 @@ const ListCart = () => {
     }
   };
 
-  const handleCheckAllItem = (e) => {
-    console.log("value", e.target.checked);
+  const handleCheckAllItem = () => {
     //setIsCheckAll(!isCheckAll)
     //setCheckALl(e.target.checked);
-    let checkAllValue = cartItems.map((item) => {
+    const checkAllValue = cartItems.map((item) => {
+
       return item.product;
     });
     if (isCheckAll) {
@@ -98,7 +104,6 @@ const ListCart = () => {
   };
 
   const handleCheckout = () => {
-    console.log("checkout", checkItems);
 
     router.push({
         pathname:'/checkout',
@@ -106,7 +111,6 @@ const ListCart = () => {
       },
       'checkout'
     )
-
   };
 
   useEffect(() => {
@@ -120,7 +124,6 @@ const ListCart = () => {
     }
   }, [checkItems]);
 
-  console.log("value 2", cartItems, checkItems,isCheckAll);
   return (
     <>
       <Box sx={{ display: "flex", flexDirection: "column" }}>
@@ -148,7 +151,8 @@ const ListCart = () => {
       <Box sx={{ display: "flex", flexDirection: "column" }}>
         {cartItems ? (
           cartItems.map((item) => {
-            let isCheck = checkItems.includes(item.product);
+            const isCheck = checkItems.includes(item.product);
+
             return (
               <Box key={item.product} sx={{ display: "flex", width: "100%" }}>
                 <Box sx={{ width: "5%" }}>

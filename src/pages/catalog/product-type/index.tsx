@@ -1,33 +1,33 @@
 "use client"
-import { Box, Button, debounce, Grid } from "@mui/material";
+import { Box, Button, Grid } from "@mui/material";
 import { GridColDef, GridRenderCellParams, GridTreeNodeWithRender } from "@mui/x-data-grid";
-import { MouseEvent, useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import DeleteButton from "src/components/button/delete-button";
 import EditButton from "src/components/button/edit-button";
 import CustomAlertDialog from "src/components/confirm-box";
-import CreateEditModal from "src/views/layouts/components/create-edit-modal";
 import CustomDataTable from "src/components/data-grid"
 import FallbackSpinner from "src/components/fall-back";
-import CustomModal from "src/components/modal";
 import CustomTextField from "src/components/text-field";
-import { ProductTypeDataType, TPramsGetAllProductType, TPramsUpdateProductType } from "src/configs/@type/catalog/product-type";
-import { LIST_DATA_PERMISION } from "src/configs/permission";
+import { TPramsGetAllProductType, TPramsUpdateProductType } from "src/configs/@type/catalog/product-type";
 import { AppDispatch, RootState } from "src/stores";
-import { deleteProductTypeAction, getAllProductTypeAction, updateProductTypeAction } from "src/stores/catalog/product-type/productTypeAction";
+import { deleteProductTypeAction, getAllProductTypeAction } from "src/stores/catalog/product-type/productTypeAction";
 import CreateEditTypeModal from "src/views/layouts/components/catalog/create-edit-type-modal";
 
-
 const MANAGE_PRODUCT_TYPE = ()=> {
+
   /**state  */
   const [openModal,setOpenModal] = useState({open:false,id:""})
   const [openConfirm,setOpenConfirm] = useState(false);
   const [update, setUpdate] = useState<TPramsUpdateProductType | null>(null)
   const [search, setSearch] = useState<string>("");
+  console.log('search',search)
   const dispatch = useDispatch<AppDispatch>()
+
   /**translation */
-  const { i18n, t } = useTranslation();
+  const { t } = useTranslation();
+
   /**handEditProductType */
   const handEditProductType = ( params: GridRenderCellParams<any, any, any, GridTreeNodeWithRender>) => {
     const {_id,name,slug} = params.row
@@ -75,17 +75,13 @@ const MANAGE_PRODUCT_TYPE = ()=> {
   }
 ];
 
-
   const  getRowId =(row:any)=> {
-    console.log('get row',row);
+
     return row._id;
   }
 
-
   const handleRowClick = (params:any) => {
     console.log('Row clicked:', params.row);
-    const {_id} = params.row; 
-
   }
 
   const handleCloseConfirm = () => {
@@ -93,17 +89,16 @@ const MANAGE_PRODUCT_TYPE = ()=> {
   }
 
   const handleSearch = (e:any) => {
-    console.log(e.target.value)
     setSearch(e.target.value);
   }
   
-  const searchDelayed = useMemo(
-      () => debounce(handleSearch, 3000),
-      [handleSearch]
-  );
+  // const searchDelayed = useMemo(
+  //     () => debounce(handleSearch, 3000),
+  //     [handleSearch]
+  // );
     
   useEffect (()=> { 
-    let params:TPramsGetAllProductType = {
+    const params:TPramsGetAllProductType = {
       limit:10,
       page:1
     }
@@ -112,10 +107,8 @@ const MANAGE_PRODUCT_TYPE = ()=> {
 
   const allProductTypes = useSelector((state:RootState) => state.productTypeSlide.productTypes)
   const isLoading = useSelector((state:RootState) => state.productTypeSlide.loading)
-   console.log('fetch all type',allProductTypes);
 
   return (
-    
     <Box sx={{height:"100%",maxWidth:"100% !important"}}>
 
       {isLoading && <FallbackSpinner />}

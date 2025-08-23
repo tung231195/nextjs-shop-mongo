@@ -8,12 +8,15 @@ interface TPropsAddressItem {
 }
 const AddressItem = (props:TPropsAddressItem) => {
   const {address,hanldeUpdateAdress} = props
+
   //state 
   const[editAddress, setEditAdress] = useState("")
+
   //handle
   const hanldeOnChangeAdress = (e:any) => {
     setEditAdress(e.target.value)
   }
+  
   return(
     <Box sx={{display:"flex"}}>
       <Box> 

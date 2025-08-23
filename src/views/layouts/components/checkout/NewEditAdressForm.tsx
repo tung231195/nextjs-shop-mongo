@@ -2,13 +2,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Box, Button } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import CustomTextField from "src/components/text-field";
-import { AppDispatch, RootState } from "src/stores";
+import { AppDispatch } from "src/stores";
 import { UserDataType } from "src/contexts/types";
 import { updateMeAction } from "src/stores/user/userAction";
 import { useEffect, useState } from "react";
+
 interface TPropsNewAddress {
   handleBackAdress: () => void
   user: UserDataType | null
@@ -18,8 +18,8 @@ const NewEditAdressForm = (props: TPropsNewAddress) => {
   const [addresses, setAddresses] = useState([{}]);
   const { handleBackAdress, user,openModalNewEditAdress } = props;
   const listAddress = user?.addresses
-  console.log('listAddress aa',user,listAddress)
-  const { t } = useTranslation();
+
+  //const { t } = useTranslation();
   const schema = yup
     .object({
       fullname: yup.string().required(),
@@ -33,16 +33,15 @@ const NewEditAdressForm = (props: TPropsNewAddress) => {
   const {
     control,
     handleSubmit,
-    formState: { errors },
     reset
   } = useForm({
     resolver: yupResolver(schema),
   });
+
   //effect 
    useEffect (() => {
      if(openModalNewEditAdress._id) {
         const myAddress = listAddress?.find((ad) => ad._id == openModalNewEditAdress._id)
-        console.log('my address', myAddress,openModalNewEditAdress._id)
         reset({
           fullname:user?.email,
           phoneNumber: myAddress?.phoneNumber,
@@ -56,9 +55,10 @@ const NewEditAdressForm = (props: TPropsNewAddress) => {
         })
      }
    },[openModalNewEditAdress])
+
   // const onSubmit = (data) => console.log(data)
   const onSubmit = (data: any): void => {
-    let address = {
+    const address = {
       firstName: "Tonky ",
       lastName: "Kany",
       middleName: data.fullname,
@@ -67,7 +67,6 @@ const NewEditAdressForm = (props: TPropsNewAddress) => {
       discount: 10,
       product: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
     };
-    console.log('listAddress',listAddress)
     setAddresses([...listAddress, address]);
     const params = {
       email: user?.email,
@@ -77,6 +76,7 @@ const NewEditAdressForm = (props: TPropsNewAddress) => {
     dispatch(updateMeAction(params));
     console.log("on submit", data, params, user, addresses);
   };
+
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>

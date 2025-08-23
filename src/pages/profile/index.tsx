@@ -1,9 +1,8 @@
-import { Avatar, Box, Button, FormControl, FormHelperText, Grid, Input, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material"
+import { Avatar, Box, Button, Grid, SelectChangeEvent } from "@mui/material"
 import { useRef, useState } from "react";
 import CustomSelectField from "src/components/select-field";
 import CustomTextField from "src/components/text-field"
 import { _fileToBase64 } from "src/helpers/profile";
-import { useAuth } from "src/hooks/useAuth";
 import { updateProfile } from "src/service/auth";
 
 const MyProfile = () => {
@@ -11,7 +10,6 @@ const MyProfile = () => {
   const [avatar, setAvatar] = useState<string>("");
   const inputHref = useRef<HTMLInputElement>(null);
   const [role, setRole] = useState("");
-  const {user} = useAuth();
   const handleSubmitProfile = (event:any) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -48,6 +46,7 @@ const MyProfile = () => {
     {value:2, label:'User'}
 
   ]
+
   return (
     <Box component="form"  onSubmit={handleSubmitProfile}>
 
@@ -59,7 +58,6 @@ const MyProfile = () => {
                   onClick={handleFileUpload}
                   sx={{ width: 134, height: 134 }}
                   alt="Remy Sharp" 
-                  //src="https://mui.com/static/images/avatar/1.jpg" 
                   src={`data:image/png;base64,${avatar}`}
                   />
                  <input 

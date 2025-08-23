@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Avatar, Button } from "@mui/material";
-import { Box, createTheme, CssBaseline, Grid, Paper, Typography } from "@mui/material";
+import { Box, CssBaseline, Grid, Paper, Typography } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -14,7 +14,7 @@ import * as yup from "yup"
 import CustomEditorRich from "src/components/editor-rich";
 import { convertToRaw, EditorState } from "draft-js";
 import draftToHtml from "draftjs-to-html";
-import { TPramsCreateProductType, TPramsGetAllProductType } from "src/configs/@type/catalog/product-type";
+import {  TPramsGetAllProductType } from "src/configs/@type/catalog/product-type";
 import CustomSelectField from "src/components/select-field";
 import CustomSwitches from "src/components/switch-toogle";
 import CustomDatePicker from "src/components/date-picker";
@@ -22,14 +22,13 @@ import { getAllCityAction } from "src/stores/city/cityAction";
 import { TPramsGetAllCity } from "src/configs/@type/city";
 import { SelectChangeEvent } from "@mui/material";
 import { getAllProductTypeAction } from "src/stores/catalog/product-type/productTypeAction";
-import { stat } from "fs";
 import { _fileToBase64 } from "src/helpers/profile";
 
-
 const ProductCreateUpdateForm = (props:any) => {
+
     //** state */
     const [file, setFile] = useState<File | null>(null);
-    const [avatar, setAvatar] = useState<String>("");
+    const [avatar, setAvatar] = useState<string>("");
     const [location, setLocation] = useState("")
     const [type, setType] = useState("")
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -37,14 +36,20 @@ const ProductCreateUpdateForm = (props:any) => {
     const [htmlContent, setHtmlContent] = useState('');
     const [date, setDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
+    console.log('file',file)
+    
     /**ref */
     const inputHref = useRef<HTMLInputElement>(null);
+
     //**props */
-    const {updateData,handleClose} = props
+    const {updateData} = props
+
     //**theme */
-    const defaultTheme = createTheme();
+    //const defaultTheme = createTheme();
+
     //** translation */
     const {t} = useTranslation();
+
     //** schema */
     const schema = yup
     .object({
@@ -65,6 +70,7 @@ const ProductCreateUpdateForm = (props:any) => {
 
     })
     .required()
+
     /** dispath */
     const dispatch =  useDispatch<AppDispatch>();
     const cityOptions = useSelector((state:RootState) => state.citySlide.cities)
@@ -72,7 +78,6 @@ const ProductCreateUpdateForm = (props:any) => {
     const {
       control,
       handleSubmit,
-      formState: { errors },
       reset,
       getValues
     } = useForm({
@@ -96,7 +101,6 @@ const ProductCreateUpdateForm = (props:any) => {
       }
     
     //** use effect */
-
     useEffect(()=> {
       console.log('data update',updateData);
         if(!updateData) {
@@ -155,9 +159,7 @@ const ProductCreateUpdateForm = (props:any) => {
                   status
             }))
       }
-     // handleClose()
     };
-
 
     const onEditorStateChange = (newEditorState:any):void => {
         setEditorState(newEditorState);
@@ -199,7 +201,7 @@ const ProductCreateUpdateForm = (props:any) => {
   };
 
     useEffect (()=> { 
-      let params:TPramsGetAllCity = {
+      const params:TPramsGetAllCity = {
         limit:10,
         page:1
       }
@@ -207,14 +209,16 @@ const ProductCreateUpdateForm = (props:any) => {
     },[]) 
 
     useEffect (()=> { 
-      let params:TPramsGetAllProductType = {
+      const params:TPramsGetAllProductType = {
           limit:10,
           page:1
       }
       dispatch(getAllProductTypeAction(params));
     },[]) 
-    // convert 
-  let locationOptions =    cityOptions.map ((city )=> {
+
+  // convert 
+  const locationOptions =    cityOptions.map ((city )=> {
+
       return {
         label: city.name,
         value: city._id
@@ -222,7 +226,8 @@ const ProductCreateUpdateForm = (props:any) => {
     })
 
     
-    let productTypeOptions =  productTypes.map ((type )=> {
+    const productTypeOptions =  productTypes.map ((type )=> {
+
       return {
         label: type.name,
         value: type._id,
@@ -230,10 +235,7 @@ const ProductCreateUpdateForm = (props:any) => {
       }
     })
 
-
-    console.log('aaaaaaaaa',errors)
     return (
-  
         <Grid container component="main" sx={{ height: 'auto' }}>
           <CssBaseline />
           <Grid
@@ -269,7 +271,6 @@ const ProductCreateUpdateForm = (props:any) => {
                     <Grid item xs={6} md={6}>
                         <Box>
                         <Controller
-                              // defaultValue={updateData && updateData.name}
                               control={control}
                               render={({ field: { onChange, onBlur, value } }) => (
                                 <CustomTextField   
@@ -320,7 +321,6 @@ const ProductCreateUpdateForm = (props:any) => {
                           onClick={handleFileUpload}
                           sx={{ width: 134, height: 134 }}
                           alt="Remy Sharp" 
-                          //src="https://mui.com/static/images/avatar/1.jpg" 
                           src={`data:image/png;base64,${avatar}`}
                           />
                         <input 
@@ -335,7 +335,6 @@ const ProductCreateUpdateForm = (props:any) => {
                     <Grid item xs={6} md={6}>
                         <Box>
                           <Controller
-                              // defaultValue={updateData && updateData.name}
                               control={control}
                               render={({ field: { onChange, onBlur, value } }) => (
                                 <CustomTextField   
@@ -357,7 +356,6 @@ const ProductCreateUpdateForm = (props:any) => {
                         </Box>
                         <Box>
                           <Controller
-                              // defaultValue={updateData && updateData.name}
                               control={control}
                               render={({ field: { onChange, onBlur, value } }) => (
                                 <CustomTextField   
@@ -382,7 +380,6 @@ const ProductCreateUpdateForm = (props:any) => {
                           <CustomDatePicker date={endDate} handleChangeDate={handleChangeEndDate} label="Discount End Date" />
                         <Box>
                           <Controller
-                              // defaultValue={updateData && updateData.name}
                               control={control}
                               render={({ field: { onChange, onBlur, value } }) => (
                                 <CustomTextField   

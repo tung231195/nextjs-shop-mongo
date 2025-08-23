@@ -1,9 +1,11 @@
 import { Button } from "@mui/material"
+
 interface TDeleteButton {
   handDelete: () => void
 }
 const DeleteButton = (props:TDeleteButton) => {
-    const {handDelete} = props
+  const {handDelete} = props
+  
   return (
     <>
       <Button
@@ -15,5 +17,4 @@ const DeleteButton = (props:TDeleteButton) => {
     </>
   )
 }
-
 export default DeleteButton

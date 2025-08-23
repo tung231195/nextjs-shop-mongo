@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -12,10 +12,7 @@ import AccountMenu from 'src/components/Menu';
 import ToggleLanguages from 'src/components/languages';
 import MiniCart from './components/shoppingcart/minicart';
 
-
-
 const drawerWidth: number = 240;
-
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
 }
@@ -44,8 +41,8 @@ open: boolean
 }
 
 const HozLayout:NextPage<TProps> = ({open,toggleDrawer}) => {
-  return (
 
+  return (
      <Box sx={{ display: 'flex' }}>
         <AppBar position="absolute" open={open}>
           <Toolbar

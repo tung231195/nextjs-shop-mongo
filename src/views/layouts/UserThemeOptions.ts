@@ -2,6 +2,7 @@
 import { ThemeOptions } from '@mui/material'
 
 const UserThemeOptions = (): ThemeOptions => {
+  
   return {
     breakpoints: {
       values: {

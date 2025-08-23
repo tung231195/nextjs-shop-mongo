@@ -1,8 +1,7 @@
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "src/stores";
 import { searchUser } from "src/stores/apps/count";
-import { increaseAction,descreaseAction } from "src/stores/apps/count/countAction";
+import { increaseAction } from "src/stores/apps/count/countAction";
 
 const Count = () => {
  // const [count, setCount] = useState(1);

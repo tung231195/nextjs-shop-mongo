@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "@mui/material";
-import { Box, createTheme, CssBaseline, Grid, Paper, Typography } from "@mui/material";
+import { Box, CssBaseline, Grid, Paper, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -13,13 +13,17 @@ import { createProductTypeAction, updateProductTypeAction } from "src/stores/cat
 import * as yup from "yup"
 
 const ProductTypeCreateUpdateForm = (props:any) => {
+
     //** state */
     //**props */
-    const {updateData,handleClose} = props
+    const {updateData} = props
+
     //**theme */
-    const defaultTheme = createTheme();
+    //const defaultTheme = createTheme();
+
     //** translation */
     const {t} = useTranslation();
+
     //** schema */
     const schema = yup
     .object({
@@ -33,15 +37,14 @@ const ProductTypeCreateUpdateForm = (props:any) => {
     const {
       control,
       handleSubmit,
-      formState: { errors },
       reset,
       getValues
     } = useForm({
       resolver: yupResolver(schema),
     })
+
     // const onSubmit = (data) => console.log(data)    
     const onSubmit = (params:TPramsCreateProductType):void=>  {
-      console.log('create new type',params);
   
       if (!updateData) {
             dispatch(createProductTypeAction(params))            
@@ -53,7 +56,6 @@ const ProductTypeCreateUpdateForm = (props:any) => {
             })
             )
       }
-     // handleClose()
     };
     const TDefaultData = {
       name:'',
@@ -106,7 +108,6 @@ const ProductTypeCreateUpdateForm = (props:any) => {
               <form  onSubmit={handleSubmit(onSubmit)} >
                 <Box>
                  <Controller
-                      // defaultValue={updateData && updateData.name}
                       control={control}
                       render={({ field: { onChange, onBlur, value } }) => (
                         <CustomTextField   

@@ -1,5 +1,3 @@
-import { GridColDef } from "@mui/x-data-grid"
-
 export interface TPramsGetAllDeliveryType {
   limit: number
   page:number

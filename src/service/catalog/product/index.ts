@@ -17,8 +17,7 @@ export const updateProduct = async(data:TPramsUpdateProduct)=> {
 
 export const getAllProducts = async(params:TPramsGetAllProduct) => {
    
-   const Products = await axiosInstance.get(`${CONFIG_API.CATALOG.PRODUCT.INDEX}`)
-   console.log('get All Products', Products)
+   const Products = await axiosInstance.get(`${CONFIG_API.CATALOG.PRODUCT.INDEX}`,{params})
    if(Products) {
       return Products;
    }else {

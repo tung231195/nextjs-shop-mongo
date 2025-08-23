@@ -1,7 +1,6 @@
 
 import { Box, Button, Grid } from "@mui/material"
 import { useDispatch, useSelector } from "react-redux"
-import { TPropsDeliveryType } from "src/pages/delivery-type"
 import { AppDispatch, RootState } from "src/stores"
 import CustomDataTable from "src/components/data-grid"
 import { GridColDef, GridRenderCellParams, GridTreeNodeWithRender } from "@mui/x-data-grid"
@@ -12,56 +11,54 @@ import { TPramsGetAllDeliveryType, TPramsUpdateDeliveryType } from "src/configs/
 import { useTranslation } from "react-i18next"
 import CreateEditDeliveryType from "src/views/layouts/components/delivery-type"
 import { deleteDeliveryTypeAction, getAllDeliveryTypeAction } from "src/stores/delivery-type/deliveryTypeAction"
-const DeliveryTypePage = (props:TPropsDeliveryType)=> {
 
- const allDeliveryTypes = useSelector((state:RootState) => state.deliverySlide.deliveries)
+const DeliveryTypePage = ()=> {
+    const allDeliveryTypes = useSelector((state:RootState) => state.deliverySlide.deliveries)
+
     /**state  */
     const [openModal,setOpenModal] = useState({open:false,id:""})
-    const [openConfirm,setOpenConfirm] = useState(false);
+
+    //const [openConfirm,setOpenConfirm] = useState(false);
     const [update, setUpdate] = useState<TPramsUpdateDeliveryType | null>(null)
 
     //** dispatch */
     const dispatch = useDispatch<AppDispatch>();
-   //handle 
 
+    //handle 
       const  getRowId =(row:any)=> {
-        console.log('get row',row);
+
         return row._id;
       }
-    
-  
       const handleRowClick = (params:any) => {
-        console.log('Row clicked:', params.row);
         const {_id} = params.row; 
-    
+        console.log('Row clicked:', params.row,_id);    
       }
-
       const handleEditItem = ( params: GridRenderCellParams<any, any, any, GridTreeNodeWithRender>) => {
         setUpdate({name:params.row.name,type:params.row.type,_id:params.row._id});
         setOpenModal({open:true,id:params.row._id});
       }
       const handleCreateItem = () => {
-        console.log('create delivery')
         setUpdate(null);
         setOpenModal({open:true,id:openModal.id});
       }
-    
       const handleClose = () => {
         setOpenModal({open:false,id:""});
       }
       const handDeleteItem=(params:any) => {
-        setOpenConfirm(true);
+        ///setOpenConfirm(true);
        dispatch(deleteDeliveryTypeAction(params._id))
       }
-      let params:TPramsGetAllDeliveryType = {
+      const params:TPramsGetAllDeliveryType = {
           limit:10,
           page:1
       }
-    //use effect 
+
+      //use effect 
       useEffect (()=> { 
         dispatch(getAllDeliveryTypeAction(params));
       },[])
-   // datab table 
+      
+      // datab table 
      const columns: GridColDef[] = [
      { field: '_id', headerName: 'ID', width: 90 },
      {
@@ -83,6 +80,7 @@ const DeliveryTypePage = (props:TPropsDeliveryType)=> {
    
      },
      { field: 'actions', headerName: 'Actions', width: 400, renderCell: (params) => {
+
        return (
          <Box>
          <DeleteButton handDelete={()=>handDeleteItem(params.row)} />
@@ -92,8 +90,10 @@ const DeliveryTypePage = (props:TPropsDeliveryType)=> {
        }   
      }
    ];
+
    //translate
-   const {t} = useTranslation()   
+  const {t} = useTranslation()   
+
   return (
     <>
           <Box>

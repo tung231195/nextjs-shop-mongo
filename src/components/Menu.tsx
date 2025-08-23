@@ -30,7 +30,7 @@ const AccountMenu = () => {
 
     router.push('/roles')
   }
-{{console.log('user data',user)}} 
+  
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>

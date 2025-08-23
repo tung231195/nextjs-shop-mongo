@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import CustomPagination from "src/components/pagination"
-import { CityDataType, TPramsGetAllCity } from "src/configs/@type/city"
+import { CityDataType } from "src/configs/@type/city"
 import { getAllCitys } from "src/service/city"
 
 interface TPropsTest {
@@ -9,12 +9,13 @@ interface TPropsTest {
 const TestPagge = (props:TPropsTest) => {
   const {cities} = props
   const [page, setPage] = useState(1);
-  console.log('test props',props,cities)
-  useEffect(() => {
-    
+  useEffect(() => {    
+    setPage(1)
   },[page])
+
   return(<>
      {cities.length && cities.map((city) => {
+
         return (
           <> <h2>{city.name}</h2></>
         )
@@ -26,7 +27,6 @@ const TestPagge = (props:TPropsTest) => {
 export default TestPagge
 
 export async function getServerSideProps() {
-
   const allCity = await getAllCitys({limit:-1, page:-1});
 
   return {

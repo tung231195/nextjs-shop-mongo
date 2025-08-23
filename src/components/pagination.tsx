@@ -1,8 +1,7 @@
 import * as React from 'react';
-import Pagination, { PaginationProps } from '@mui/material/Pagination';
-import PaginationItem from '@mui/material/PaginationItem';
-import Stack from '@mui/material/Stack';
+import { PaginationProps } from '@mui/material/Pagination';
 import Link from 'next/link';
+
 interface TpropCustomPagination extends PaginationProps {
   postsPerPage:number
   totalPosts:number
@@ -11,13 +10,10 @@ interface TpropCustomPagination extends PaginationProps {
 }
 const  CustomPagination=(props:TpropCustomPagination)=> {
   const {totalPosts,postsPerPage,setCurrentPage,currentPage} = props
-
- const pageNumbers = [];
-
+  const pageNumbers = [];
   for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
     pageNumbers.push(i);
   }
-
   const paginate = (e:any,pageNumber:any) => {
     e.preventDefault();
     setCurrentPage(pageNumber);
@@ -44,5 +40,4 @@ const  CustomPagination=(props:TpropCustomPagination)=> {
     </nav>
   );
 }
-
 export default CustomPagination 

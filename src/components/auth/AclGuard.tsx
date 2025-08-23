@@ -1,8 +1,9 @@
 // ** React Imports
-import { useRouter } from 'next/router'
+
 import { ReactNode } from 'react'
 
 // ** Types
+
 import { AppAbility, buildAbilityFor, type ACLObj } from 'src/configs/acl'
 import { useAuth } from 'src/hooks/useAuth'
 import Error401 from 'src/pages/401'
@@ -20,7 +21,9 @@ const AclGuard = (props: AclGuardProps) => {
   const { aclAbilities, children, guestGuard = false, authGuard = true } = props
   const authContext = useAuth();
   let ability: AppAbility;
-  const router = useRouter();
+
+  //const router = useRouter();
+  
   console.log('check auth in acl',authContext);
   const permissionUser = authContext.user?.role?.permissions ?? []
   
@@ -28,13 +31,15 @@ const AclGuard = (props: AclGuardProps) => {
       ability = buildAbilityFor(permissionUser,aclAbilities.subject);
   }
   if(ability) {
-    // console.log('check ability',ability)
+     console.log('check ability',ability,guestGuard,authGuard)
     if(authContext.user && ability.can(aclAbilities.action,aclAbilities.subject)) {
-        return children;
-    }
-    return <BlankLayout><Error401 /></BlankLayout>
 
+      return children;
+    }
+
+    return <BlankLayout><Error401 /></BlankLayout>
   }
+
   return children;
 }
 

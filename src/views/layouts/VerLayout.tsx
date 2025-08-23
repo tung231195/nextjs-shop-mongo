@@ -1,24 +1,16 @@
 import * as React from 'react';
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import { styled} from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import { NextPage } from 'next';
-import mainListItems from './list_item';
-import IconifyIcon from 'src/components/Icon';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import MainListItems from './list_item';
 import { ListMenu } from 'src/helpers/list-menu';
 
-
-
-
 const drawerWidth: number = 240;
-
-
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
     '& .MuiDrawer-paper': {
@@ -49,10 +41,9 @@ type TProps = {
  toggleDrawer: () => void
 }
 const items = ListMenu;
-
 const VerLayout:NextPage<TProps> = ({open,toggleDrawer}) => {
-  return (
 
+  return (
      <Box sx={{ display: 'flex' }}>
         <Drawer variant="permanent" open={open}>
           <Toolbar

@@ -1,7 +1,5 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Modal, { ModalProps } from '@mui/material/Modal';
 import { styled } from '@mui/material';
 
@@ -19,10 +17,11 @@ const style = {
 interface TPropsModal extends ModalProps {
 }
 const StyleModal = styled(Modal)<TPropsModal>(({theme})=> {
+
   return {
     "& .MuiBox-root": {
       border: "none",
-      color:"#000",
+      color:theme.palette.background.default,
       fontSize: "24px",
       "& .MuiTypography-h6": {
         color: "#000"
@@ -31,10 +30,8 @@ const StyleModal = styled(Modal)<TPropsModal>(({theme})=> {
   }
 })
 
-const  CustomModal= React.forwardRef((props:TPropsModal,ref) => {
+const  CustomModal= React.forwardRef((props:TPropsModal) => {
   const {open,onClose,children, ...rest}  = props
-  // const [open, setOpen] = React.useState(false);
-  console.log('check props aaaaaaaaaaaa',props)
  
   return (
     <div>

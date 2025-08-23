@@ -1,7 +1,7 @@
 "use client"
-import { Avatar, Badge, Box, Button, debounce, Grid, styled, Typography } from "@mui/material";
+import { Avatar, Badge, Box, Button, Grid, styled, Typography } from "@mui/material";
 import { GridColDef, GridRenderCellParams, GridTreeNodeWithRender } from "@mui/x-data-grid";
-import { MouseEvent, useEffect, useMemo, useState } from "react";
+import {  useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import DeleteButton from "src/components/button/delete-button";
@@ -10,39 +10,39 @@ import CustomAlertDialog from "src/components/confirm-box";
 import CreateEditModal from "src/views/layouts/components/create-edit-modal";
 import CustomDataTable from "src/components/data-grid"
 import FallbackSpinner from "src/components/fall-back";
-import CustomModal from "src/components/modal";
 import CustomTextField from "src/components/text-field";
-import { ProductDataType, TPramsGetAllProduct, TPramsUpdateProduct } from "src/configs/@type/catalog/product";
-import { LIST_DATA_PERMISION } from "src/configs/permission";
+import { TPramsGetAllProduct, TPramsUpdateProduct } from "src/configs/@type/catalog/product";
 import { AppDispatch, RootState } from "src/stores";
-import { deleteProductAction, getAllProductAction, updateProductAction } from "src/stores/catalog/product/productAction";
+import { deleteProductAction, getAllProductAction } from "src/stores/catalog/product/productAction";
 
+  const MANAGE_PRODUCT = ()=> {
 
-const MANAGE_PRODUCT = ()=> {
   /**state  */
   const [openModal,setOpenModal] = useState({open:false,id:""})
   const [openConfirm,setOpenConfirm] = useState(false);
   const [update, setUpdate] = useState<TPramsUpdateProduct | null>(null)
-  const [search, setSearch] = useState<string>("");
   const dispatch = useDispatch<AppDispatch>()
+
   /**translation */
-  const { i18n, t } = useTranslation();
+  const { t } = useTranslation();
+
   //** default */
-  const TDefaultProduct = {
-      "name": "",
-      "slug": "",
-      "image": "",
-      "location": "",
-      "price": 0,
-      "countInStock": 0,
-      "description": "",
-      "discount": 0,
-      "sold": 0,
-      "type": "",
-      "discountStartDate": null,
-      "discountEndDate": null,
-      "status": 0
-  }
+  // const TDefaultProduct = {
+  //     "name": "",
+  //     "slug": "",
+  //     "image": "",
+  //     "location": "",
+  //     "price": 0,
+  //     "countInStock": 0,
+  //     "description": "",
+  //     "discount": 0,
+  //     "sold": 0,
+  //     "type": "",
+  //     "discountStartDate": null,
+  //     "discountEndDate": null,
+  //     "status": 0
+  // }
+
   /**handEditProduct */
   const handEditProduct = ( params: GridRenderCellParams<any, any, any, GridTreeNodeWithRender>) => {
     const { _id,name,type,price,discount,discountEndDate,discountStartDate,status,location,slug,sold,description,countInStock,image} = params.row
@@ -56,7 +56,6 @@ const MANAGE_PRODUCT = ()=> {
     setOpenModal({open:true,id:_id});  
   }
   const handleCreateProduct = () => {
-    console.log('create product')
     setUpdate(null);
     setOpenModal({open:true,id:openModal.id});
   }
@@ -68,7 +67,7 @@ const MANAGE_PRODUCT = ()=> {
     setOpenConfirm(true);
     dispatch(deleteProductAction(params._id))
   }
-  const StyledBadge = styled(Badge)(({ theme }) => ({ 
+  const StyledBadge = styled(Badge)(() => ({ 
         "& .MuiAvatar-img" : {
           objectFit: "container"
         }
@@ -84,6 +83,7 @@ const MANAGE_PRODUCT = ()=> {
     sortable:false,
     filterable:false,
     renderCell: (params) => {
+
       return (
         <>
         <StyledBadge
@@ -91,7 +91,6 @@ const MANAGE_PRODUCT = ()=> {
           <Avatar 
             sx={{ width: 150, height: "100%" }}
             alt="Remy Sharp" 
-            //src="https://mui.com/static/images/avatar/1.jpg" 
             src={`data:image/png;base64,${params.row.image}`}
             />
         </StyledBadge>
@@ -144,6 +143,7 @@ const MANAGE_PRODUCT = ()=> {
     sortable:false,
     filterable:false,
     renderCell: (params) => {
+
     return (
       <Box>
       <Typography>{params.row.location.name}</Typography>
@@ -160,6 +160,7 @@ const MANAGE_PRODUCT = ()=> {
     sortable:false,
     filterable:false,
     renderCell: (params) => {
+
     return (
       <Box>
       <Typography>{params.row.type.name}</Typography>
@@ -169,6 +170,7 @@ const MANAGE_PRODUCT = ()=> {
 
   },
   { field: 'actions', headerName: 'Actions', width: 400, renderCell: (params) => {
+
     return (
       <Box>
       <DeleteButton handDelete={()=>handDeleteProduct(params.row)} />
@@ -181,15 +183,13 @@ const MANAGE_PRODUCT = ()=> {
 
 
   const  getRowId =(row:any)=> {
-    console.log('get row',row);
+
     return row._id;
   }
 
 
   const handleRowClick = (params:any) => {
-    console.log('Row clicked:', params.row);
-    const {_id} = params.row; 
-
+    console.log(params)
   }
 
   const handleCloseConfirm = () => {
@@ -198,16 +198,15 @@ const MANAGE_PRODUCT = ()=> {
 
   const handleSearch = (e:any) => {
     console.log(e.target.value)
-    setSearch(e.target.value);
   }
   
-  const searchDelayed = useMemo(
-      () => debounce(handleSearch, 3000),
-      [handleSearch]
-  );
+  // const searchDelayed = useMemo(
+  //     () => debounce(handleSearch, 3000),
+  //     [handleSearch]
+  // );
     
   useEffect (()=> { 
-    let params:TPramsGetAllProduct = {
+    const params:TPramsGetAllProduct = {
         limit: 10,
         page:1,
         search:"",
@@ -222,10 +221,9 @@ const MANAGE_PRODUCT = ()=> {
     }
     dispatch(getAllProductAction(params));
   },[])
-
   const allProducts = useSelector((state:RootState) => state.productSlide.products)
   const isLoading = useSelector((state:RootState) => state.productSlide.loading)
-  console.log('fetch all type',allProducts);
+
   return (
     <Box sx={{height:"100%",maxWidth:"100% !important"}}>
       {isLoading && <FallbackSpinner />}

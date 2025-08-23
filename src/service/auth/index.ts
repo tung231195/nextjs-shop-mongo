@@ -1,27 +1,20 @@
-import { UserDataType } from "src/contexts/types";
 import axiosInstance from "src/helpers/axious";
 import { TPramsCreateRole, TPramsGetAllRoles, TPramsUpdateRole } from "src/views/type";
 
-
 export const updateProfile = async(data:any)=> {
-
-
    const updateMe = await axiosInstance.put('auth/me',data)
    if(data) {
       return {
         data:updateMe
       }
    }else {
-    console.log('no successful')
     return null; 
    }
 
 }
-
 export const getAllRoles = async(params:TPramsGetAllRoles) => {
 
-   const roles = await axiosInstance.get('roles')
-   console.log('udpate', roles)
+   const roles = await axiosInstance.get('roles',{params})
    if(roles) {
       return roles;
    }else {
@@ -31,9 +24,7 @@ export const getAllRoles = async(params:TPramsGetAllRoles) => {
 
 
 export const getAllRoleById = async(_id:string) => {
-
    const roles = await axiosInstance.get(`roles/${_id}`)
-   console.log('get role by id', roles)
    if(roles) {
       return roles;
    }else {
@@ -45,7 +36,6 @@ export const getAllRoleById = async(_id:string) => {
 export const updateRoleById = async(params:TPramsUpdateRole) => {
    const {id, name,permissions} = params
    const data = await axiosInstance.put(`roles/${id}`,{name,permissions})
-   console.log('get role by id', data)
    if(data) {
       return data;
    }else {

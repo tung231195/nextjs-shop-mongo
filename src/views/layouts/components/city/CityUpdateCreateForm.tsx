@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "@mui/material";
-import { Box, createTheme, CssBaseline, Grid, Paper, Typography } from "@mui/material";
+import { Box, CssBaseline, Grid, Paper, Typography } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
@@ -12,7 +12,8 @@ import * as yup from "yup"
 
 const CityUpdateCreateForm = (props:any) => {
   const {updateData,handleClose} = props
-    const defaultTheme = createTheme();
+
+   // const defaultTheme = createTheme();
     const {t} = useTranslation();
     const schema = yup
     .object({
@@ -25,13 +26,12 @@ const CityUpdateCreateForm = (props:any) => {
     const {
       control,
       handleSubmit,
-      formState: { errors },
     } = useForm({
       resolver: yupResolver(schema),
     })
+
     // const onSubmit = (data) => console.log(data)    
     const onSubmit = (params:TPramsCreateCity):void => {
-      console.log(params);
       if (!updateData) {
             dispatch(createCityAction(params))            
       } else {

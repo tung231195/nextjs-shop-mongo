@@ -6,11 +6,12 @@ type TProps = {
   children: React.ReactNode
 }
 
-const BlankLayoutWrap = styled(Box)<BoxProps>(({theme}) => ({
+const BlankLayoutWrap = styled(Box)<BoxProps>(() => ({
   height: "100vh"
 }))
 
 const BlankLayout:NextPage<TProps> =({children}) => {
+
   return (
     <BlankLayoutWrap>
         <Box>{children}</Box>

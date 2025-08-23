@@ -2,6 +2,7 @@ import { Box } from "@mui/material"
 import CustomModal from "../../../components/modal"
 import ProductCreateUpdateForm from "src/views/layouts/components/catalog/ProductCreateUpdateForm"
 import { TPramsUpdateProduct } from "src/configs/@type/catalog/product"
+
 interface TPropCreateEditModal {
   handleClose: () => void
   open: {open:boolean,id:string},
@@ -9,6 +10,7 @@ interface TPropCreateEditModal {
 }
 const CreateEditModal = (props:TPropCreateEditModal) => {
   const {handleClose,open,updateData} = props
+  
   return (
     <CustomModal onClose={handleClose}   open={open.open}>
         <Box>

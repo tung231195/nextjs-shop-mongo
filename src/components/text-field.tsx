@@ -1,10 +1,10 @@
-// ** Icon Imports
 import { TextFieldProps,TextField, styled } from "@mui/material"
 
 const TextFieldStyle = styled(TextField)<TextFieldProps>((theme)=>{
+
   return {
     "& .MuiOutlinedInput-root" : {
-      color: "red"
+      color:theme.theme.palette.grey
       
     },
     "& .MuiInputLabel-root" : {
@@ -20,8 +20,9 @@ const TextFieldStyle = styled(TextField)<TextFieldProps>((theme)=>{
 });
 
 const CustomTextField = (props: TextFieldProps) => {
-  const {size='small',variant, InputLabelProps} = props;
-  return <TextFieldStyle   size ='small'  InputLabelProps = {{...InputLabelProps}} {...props} />
+  const {size='small', InputLabelProps} = props;
+
+  return <TextFieldStyle   size ={size}  InputLabelProps = {{...InputLabelProps}} {...props} />
 }
 
 export default CustomTextField

@@ -31,6 +31,7 @@ const names = [
 ];
 
 function getStyles(name: string, personName: string[], theme: Theme) {
+  
   return {
     fontWeight: personName.includes(name)
       ? theme.typography.fontWeightMedium
@@ -48,7 +49,6 @@ export default function MultipleSelect() {
     } = event;
     console.log(value)
     setPersonName(
-      // On autofill we get a stringified value.
       typeof value === 'string' ? value.split(',') : value,
     );
   };

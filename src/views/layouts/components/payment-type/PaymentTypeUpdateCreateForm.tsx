@@ -2,7 +2,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "@mui/material";
 import {
   Box,
-  createTheme,
   CssBaseline,
   Grid,
   Paper,
@@ -13,20 +12,13 @@ import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
 import CustomTextField from "src/components/text-field";
 import { TPramsCreatePaymentType, TPramsUpdatePaymentType } from "src/configs/@type/payment-type";
 import { CreatePaymentType, updatePaymentType } from "src/service/payment-type";
-import { AppDispatch } from "src/stores";
-import {
-  createPaymentTypeAction,
-  updatePaymentTypeAction,
-} from "src/stores/payment-type/paymentTypeAction";
 import * as yup from "yup";
 
 const PaymentTypeUpdateCreateForm = (props: any) => {
   const { updateData, handleClose } = props;
-  const defaultTheme = createTheme();
   const { t } = useTranslation();
   const schema = yup
     .object({
@@ -38,13 +30,13 @@ const PaymentTypeUpdateCreateForm = (props: any) => {
     control,
     reset,
     handleSubmit,
-    formState: { errors },
+    formState: { },
   } = useForm({
     resolver: yupResolver(schema),
   });
+
   // const onSubmit = (data) => console.log(data)
   const onSubmit = (params: TPramsCreatePaymentType): void => {
-    console.log("submit type", updateData,params);
     if (!updateData) {
       mutation.mutate(params)
       toast.success('Add successfully!')
@@ -63,27 +55,31 @@ const PaymentTypeUpdateCreateForm = (props: any) => {
 
   const queryClient = useQueryClient()
   const postItem = (params:TPramsCreatePaymentType) => {
+
       return CreatePaymentType(params)
   }
-    // Mutations
+
+  // Mutations
   const mutation = useMutation({
     mutationFn: postItem,
     onSuccess: () => {
+
       // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: ['fetch_all_payment'] })
-      //queryClient.fetchInfiniteQuery('fetch_all_payment')
     },
   })
   const postEditItem = (data:TPramsUpdatePaymentType) => {
+
       return updatePaymentType(data)
   }
+
   // Mutations
   const mutationUpdate = useMutation({
     mutationFn: postEditItem,
     onSuccess: () => {
+
       // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: ['fetch_all_payment'] })
-      //queryClient.fetchInfiniteQuery('fetch_all_payment')
     },
   })
 
@@ -98,6 +94,7 @@ const PaymentTypeUpdateCreateForm = (props: any) => {
       reset({});
     }
   }, [updateData]);
+
   return (
     <Grid container component="main" sx={{ height: "auto" }}>
       <CssBaseline />

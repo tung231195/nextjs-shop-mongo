@@ -3,9 +3,7 @@ import CONFIG_API from "src/configs/api"
 import { TPramsCreateDeliveryType, TPramsGetAllDeliveryType, TPramsUpdateDeliveryType } from "src/configs/@type/delivery-type";
 
 export const updateDeliveryType = async(data:TPramsUpdateDeliveryType)=> {
-   console.log('update delivery',`${CONFIG_API.SYSTEM.ORDER.DILEVERY.INDEX}/${data._id}`)
    const updated = await axiosInstance.put(`${CONFIG_API.SYSTEM.ORDER.DILEVERY.INDEX}/${data._id}`,{name:data.name,price:data.price})
-   console.log('update delivery aa',updated)
    if(updated) {
       return updated;
    }else {
@@ -15,9 +13,7 @@ export const updateDeliveryType = async(data:TPramsUpdateDeliveryType)=> {
 }
 
 export const getAllDeliveryTypes = async(params:TPramsGetAllDeliveryType) => {
-   
-   const deliverys = await axiosInstance.get(`${CONFIG_API.SYSTEM.ORDER.DILEVERY.INDEX}`)
-   console.log('get All DeliveryTypes', deliverys)
+   const deliverys = await axiosInstance.get(`${CONFIG_API.SYSTEM.ORDER.DILEVERY.INDEX}`,{params})
    if(deliverys) {
       return deliverys;
    }else {
@@ -25,11 +21,9 @@ export const getAllDeliveryTypes = async(params:TPramsGetAllDeliveryType) => {
    }
 }
 
-
 export const getAllDeliveryTypeById = async(deliveryId:string) => {
 
    const deliverys = await axiosInstance.get(`${CONFIG_API.SYSTEM.ORDER.DILEVERY.INDEX}/${deliveryId}`)
-   console.log('get role by id', deliverys)
    if(deliverys) {
       return deliverys;
    }else {

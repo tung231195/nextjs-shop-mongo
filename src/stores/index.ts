@@ -1,7 +1,4 @@
-// ** Toolkit imports
 import { configureStore } from '@reduxjs/toolkit'
-
-// ** Reducers
 import user from 'src/stores/apps/user'
 import countSlide from 'src/stores/apps/count'
 import roleSlide from 'src/stores/apps/role'
@@ -13,6 +10,7 @@ import cartSlide from "./shoppingcart"
 import deliverySlide from './delivery-type'
 import paymentSlide from './payment-type'
 import checkoutSlide  from './checkout'
+
 export const store = configureStore({
   reducer: {
     user,

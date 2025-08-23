@@ -8,53 +8,40 @@ import {
 import { FormLabel } from "@mui/material";
 import {
   Box,
-  debounce,
   Grid,
-  ListItem,
   Radio,
-  Tab,
-  Tabs,
-  useTheme,
 } from "@mui/material";
 import Head from "next/head";
 import {
   ChangeEvent,
   ReactNode,
-  useCallback,
   useEffect,
   useState,
 } from "react";
-import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import ProductItem from "src/components/card-product-item";
 import CustomPagination from "src/components/pagination";
 import CustomTextField from "src/components/text-field";
 import { TPramsGetAllProduct } from "src/configs/@type/catalog/product";
 import { CityDataType } from "src/configs/@type/city";
-import { useAuth } from "src/hooks/useAuth";
-import { useSettings } from "src/hooks/useSettings";
 import { getAllProductsPublic } from "src/service/catalog/product";
-import { getAllProductTypes } from "src/service/catalog/product-type";
 import { AppDispatch, RootState } from "src/stores";
 import { getAllProductTypeAction } from "src/stores/catalog/product-type/productTypeAction";
 import { getAllCityAction } from "src/stores/city/cityAction";
-import BlankLayout from "src/views/layouts/BlankLayout";
 import DefaultLayout from "src/views/layouts/DefaultLayout";
 
 export default function Home() {
-  const theme = useTheme();
-  const { settings } = useSettings();
-  const { user } = useAuth();
-  const { i18n, t } = useTranslation();
+
+  //const theme = useTheme();
   const [allProducts, setAllProducts] = useState<TPramsGetAllProduct[]>([]);
   const [totalCount, setTotalCount] = useState(0);
-  const [totalPage, setTotalPage] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
   const [type, setType] = useState("");
   const [city, setCity] = useState<string>("");
-  const [activeTab, setActiveTab] = useState<boolean>(false);
+  const [totalPage, setTotalPage] = useState(0);
   const ITEM_PER_PAGE = 4;
+
   //** dispatch */
   const dispatch = useDispatch<AppDispatch>();
   const { productTypes } = useSelector(
@@ -62,7 +49,7 @@ export default function Home() {
   );
   const { cities } = useSelector((state: RootState) => state.citySlide);
   const fetAllProducts = async () => {
-    let params: TPramsGetAllProduct = {
+  const params: TPramsGetAllProduct = {
       limit: ITEM_PER_PAGE,
       page: currentPage,
       search: search,
@@ -86,12 +73,12 @@ export default function Home() {
   }, [currentPage, search, type, city]);
 
   useEffect(() => {
-    let params = { limit: -1, page: -1 };
+    const params = { limit: -1, page: -1 };
     dispatch(getAllProductTypeAction(params));
   }, []);
 
   useEffect(() => {
-    let params = { limit: -1, page: -1 };
+    const params = { limit: -1, page: -1 };
     dispatch(getAllCityAction(params));
   }, []);
 
@@ -102,17 +89,21 @@ export default function Home() {
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setSearch(e.target.value);
+    console.log(totalPage)
   };
+
   // filter product type
   const hanldeFilterProductType = (_id: string) => {
     console.log("type", _id);
-    setActiveTab(true);
+    
+    //setActiveTab(true);
     setType(_id);
   };
   const hanldeFilterCity = (_id: string) => {
     setCity(_id);
     console.log("city", _id);
   };
+
   return (
     <>
       <Head>
@@ -135,6 +126,7 @@ export default function Home() {
               >
                 {cities.length &&
                   cities.map((city: CityDataType) => {
+
                     return (
                       <FormControlLabel
                         key={city._id}
@@ -162,6 +154,7 @@ export default function Home() {
                 <Box aria-label="tabs example">
                   {productTypes.length &&
                     productTypes.map((pType) => {
+
                       return (
                         <Button
                           sx={{ border: "1px solid #cccc", marginRight: "5px" }}
@@ -181,7 +174,7 @@ export default function Home() {
             <Grid container spacing={4}>
               {allProducts &&
                 allProducts.map((product: any) => {
-                  let cartItem = {
+                  const cartItem = {
                       product:product._id,
                       name:product.name,
                       image:product.image,
@@ -189,6 +182,7 @@ export default function Home() {
                       discount:product.discount,
                       amount:product.amount
                   }
+                  
                   return <ProductItem key={product._id} item={cartItem} />;
                 })}
             </Grid>

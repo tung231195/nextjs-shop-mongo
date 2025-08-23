@@ -7,19 +7,21 @@ import { CreatePaymentType, deletePaymentType, getAllPaymentTypes, updatePayment
 export const getAllPaymentTypeAction = createAsyncThunk("getAllPaymentTypeAction", async (data:TPramsGetAllPaymentType) => {
   try {
     const allPaymentType = await getAllPaymentTypes(data);
+    
     return allPaymentType
   } catch (error) {
      return null;
   }
 });
 
-
 // create PaymentType
 export const createPaymentTypeAction = createAsyncThunk("createPaymentTypeAction", async (data:TPramsCreatePaymentType) => {
   try {
     const newData = await CreatePaymentType(data);
+
     return newData
   } catch (error) {
+
     return null;
   }
 });
@@ -29,6 +31,7 @@ export const updatePaymentTypeAction = createAsyncThunk("updatePaymentTypeAction
   console.log('check payment update error',data)
   try {
     const allUser = await updatePaymentType(data);
+
     return allUser
   } catch (error) {
   }
@@ -37,12 +40,10 @@ export const updatePaymentTypeAction = createAsyncThunk("updatePaymentTypeAction
 // DELETE PaymentType By Id
 export const deletePaymentTypeAction = createAsyncThunk("deletePaymentTypeAction", async (paymentId:string) => {
   try {
-    console.log('delete role params',paymentId)
     const deleteData = await deletePaymentType(paymentId);
-    console.log('ddddddddd get new role',paymentId, deleteData);
+
     return deleteData
-    
   } catch (error) {
-   
+    console.log('error payment',error)
   }
 });

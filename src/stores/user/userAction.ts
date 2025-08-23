@@ -2,11 +2,11 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { TPramsGetAllUser } from "src/configs/@type/users";
 import { getAllUsers, updateUser } from "src/service/users"
 
-
 // get All Roles
 export const getAllUserAction = createAsyncThunk("getAllUserAction", async (data:TPramsGetAllUser) => {
   try {
     const allUser = await getAllUsers(data);
+
     return allUser
   } catch (error) {
   }
@@ -14,6 +14,7 @@ export const getAllUserAction = createAsyncThunk("getAllUserAction", async (data
 
 export const updateMeAction = createAsyncThunk("updateMeAction",async(data:any) => {
     const updated  = await updateUser(data) 
+    
     return updated
 })
 

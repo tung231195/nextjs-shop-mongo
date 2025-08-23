@@ -11,6 +11,7 @@ import axiosInstance from 'src/helpers/axious'
 import authConfig from 'src/configs/auth'
 
 import CONFIG_API from 'src/configs/api'
+
 // ** Types
 import { AuthValuesType, LoginParams, ErrCallbackType, UserDataType } from './types'
 import { removeStoreData, setUserStoreData } from 'src/helpers/storage'
@@ -81,15 +82,11 @@ const AuthProvider = ({ children }: Props) => {
       .then(async response => {
         params.rememberMe
           ? setUserStoreData(response.data.user,response.data.access_token,response.data.refresh_token)
-   //       ? window.localStorage.setItem(authConfig.storageTokenKeyName, response.data.access_token)
           : null
         const returnUrl = router.query.returnUrl
         console.log('check response daata',response)
         setUser({ ...response.data.user })
-        //params.rememberMe ? window.localStorage.setItem('userData', JSON.stringify(response.data.user)) : null
-
         const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
-
         router.replace(redirectURL as string)
       })
 

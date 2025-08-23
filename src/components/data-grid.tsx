@@ -1,14 +1,13 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import { DataGrid, DataGridProps, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import { DataGrid, DataGridProps} from '@mui/x-data-grid';
 import { styled } from '@mui/material';
 
-
-
 const TStyleDataGrid = styled(DataGrid<DataGridProps>)((theme)=>{
+
     return {
       "& .MuiDataGrid-row.parent": {
-        background:"#ccc"
+        background:theme.theme.palette.grey
       },
       "& .MuiDataGrid-row.child": {
         background:"#fff"
@@ -18,6 +17,7 @@ const TStyleDataGrid = styled(DataGrid<DataGridProps>)((theme)=>{
 
 export default function DataGridDemo(props:DataGridProps) {
   const {rows,columns,getRowId,onRowClick,getRowClassName} = props
+
   return (
     <Box sx={{ height: "100vh", width: '100%' }}>
       <TStyleDataGrid

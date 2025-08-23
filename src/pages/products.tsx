@@ -6,7 +6,7 @@ import CustomDataTable from "src/components/data-grid";
 import CustomModal from "src/components/modal";
 
 const ProductList = () => {
-  const { i18n, t } = useTranslation();
+  const { t } = useTranslation();
   const [open,setOpen] = useState<boolean>(false);
   const handleOpen = ():void => {
     setOpen(true);
@@ -40,9 +40,11 @@ const columns: GridColDef[] = [
     description: 'This column has a value getter and is not sortable.',
     sortable: false,
     width: 160,
+    
     // valueGetter: (value, row) => `${''} ${row.lastName || ''}`,
   },
 ];
+
   return <>
   Product List Page    {t("title")}
   <CustomModal  onClose={()=> setOpen(false)} open={open} handleOpen={handleOpen} >

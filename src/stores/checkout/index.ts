@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { stat } from "fs";
 import { OrderItem, ShippingAddress } from "src/configs/@type/checkout";
 import { DeliveryTypeDataType } from "src/configs/@type/delivery-type";
 
@@ -10,7 +9,6 @@ export interface initStateOrder {
   paymentMethod: string,
 
 }
-
 const initialState = { 
   orderItems:[],
   shippingAddress: {
@@ -21,6 +19,7 @@ const initialState = {
   },
   deliveryMethod:{name:"",price:0,_id:""},
   paymentMethod: "",
+
   // itemsPrice: 0,
   // shippingPrice: 0,
   // totalPrice: 0,
@@ -31,9 +30,9 @@ const initialState = {
   // deliveredAt: "2025-08-19T14:44:26.028Z",
   // status: 0
 } as initStateOrder
+
 //create Slice
 export const checkoutSlide = createSlice({
-  
   name: "checkout",
   initialState,
   reducers: {

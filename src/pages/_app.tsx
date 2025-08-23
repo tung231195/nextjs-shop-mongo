@@ -1,7 +1,7 @@
 // ** React Imports
 import { ReactNode } from 'react'
-import { I18nextProvider } from 'react-i18next';
 import "../i18n"
+
 // ** Next Imports
 import Head from 'next/head'
 import { Router } from 'next/router'
@@ -27,7 +27,6 @@ import { AuthProvider } from 'src/contexts/AuthContext'
 
 // ** Global css styles
 import 'src/styles/globals.scss'
-
 import { store } from 'src/stores'
 import GuestGuard from 'src/components/auth/GuestGuard'
 import AuthGuard from 'src/components/auth/AuthGuard'
@@ -35,10 +34,9 @@ import FallbackSpinner from 'src/components/fall-back'
 import { SettingsConsumer, SettingsProvider } from 'src/contexts/SettingsContext'
 import AclGuard from 'src/components/auth/AclGuard'
 import ReactHotToast from 'src/components/react-hot-toast'
-import { useSettings } from 'src/hooks/useSettings'
 import ThemeComponent from 'src/theme/ThemeComponent'
 import UserLayout from 'src/views/layouts/UserLayout'
-import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query'
+import { QueryClient, QueryClientProvider} from '@tanstack/react-query'
 
 type ExtendedAppProps = AppProps & {
   Component: NextPage
@@ -62,33 +60,26 @@ if (themeConfig.routingLoader) {
     NProgress.done()
   })
 }
-
 const Guard = ({ children, authGuard, guestGuard }: GuardProps) => {
-  console.log('check guard',authGuard, guestGuard);
   if (guestGuard) {
+
     return <GuestGuard fallback={<FallbackSpinner />}>{children}</GuestGuard>
   } else if (!guestGuard && !authGuard) {
+
     return <>{children}</>
   } else {
+
     return <AuthGuard fallback={<FallbackSpinner />}>{children}</AuthGuard>
   }
 }
 
 export default function App(props: ExtendedAppProps) {
   const { Component, pageProps } = props
-
-  const { settings } = useSettings()
-  // Variables
   const getLayout = Component.getLayout ?? (page => <UserLayout>{page}</UserLayout>)
-//console.log('check layout', getLayout);
   const setConfig = Component.setConfig ?? undefined
-
   const authGuard = Component.authGuard ?? true
-
   const guestGuard = Component.guestGuard ?? false
-
   const aclAbilities = Component.acl ?? defaultACLObj
-
   const toastOptions = {
     success: {
       className: 'react-hot-toast',
@@ -103,11 +94,9 @@ export default function App(props: ExtendedAppProps) {
       }
     }
   }
-
   const queryClient = new QueryClient();
 
   return (
-
   <QueryClientProvider client={queryClient}>
     <Provider store={store}>
       <Head>
@@ -123,6 +112,7 @@ export default function App(props: ExtendedAppProps) {
         <SettingsProvider {...(setConfig ? { pageSettings: setConfig() } : {})}>
           <SettingsConsumer>
             {({ settings }) => {
+
               return (
                 <ThemeComponent settings={settings}>
                   <Guard authGuard={authGuard} guestGuard={guestGuard}>
@@ -139,7 +129,6 @@ export default function App(props: ExtendedAppProps) {
           </SettingsConsumer>
         </SettingsProvider>
       </AuthProvider>
-    
     </Provider>
     </QueryClientProvider>
   )

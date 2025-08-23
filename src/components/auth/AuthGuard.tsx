@@ -9,24 +9,25 @@ interface AuthGuardProps {
   fallback: ReactElement | null
 }
 
-const AuthGuard = (props: AuthGuardProps) => {
+  const AuthGuard = (props: AuthGuardProps) => {
   const { children, fallback } = props
   const router = useRouter();
   const authContext = useAuth();
-
+  console.log(fallback)
   useEffect(()=> {
-     // console.log('check router',router)
-      //console.log('check auth context 111',authContext.user,router,window.localStorage.getItem(authConfig.onTokenExpiration));
     if(!authContext.user && !window.localStorage.getItem(authConfig.onTokenExpiration)) {
       if(router.pathname!= '/') {
         router.replace('/login')
       }
     } else {
-     // router.replace(router.asPath)
-    }
 
+     // router.replace(router.asPath)
+
+    }
   },[router.asPath])
+  
    //return fallback;
+
   return <>{children}</>
 }
 
